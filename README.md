@@ -5,4 +5,4 @@ This is a project utilizing MQTT, node-red, and the phue light library (in addit
 
 The user interface enables the user to control colour, brightness, lights to display on.
 
-<b>The local MQTT broker is an implementation of the <a src="https://mosquitto.org/">Mosquitto</a> Open-Source MQTT broker.</b>
+<b>The local MQTT broker is an implementation of the <a href="https://mosquitto.org/">Mosquitto</a> Open-Source MQTT broker.</b>
