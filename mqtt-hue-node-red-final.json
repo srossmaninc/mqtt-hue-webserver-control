@@ -1,0 +1,876 @@
+[
+    {
+        "id": "bf55f7220cf88337",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5f4275672f56ba8d",
+        "type": "mqtt in",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "topic": "tester/huelights",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "778faa7b9053d793",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 200,
+        "wires": [
+            [
+                "6ebbbd65f950ef59",
+                "b4980b0fd297e90e",
+                "08ed4373ed40f146",
+                "a886ce10a2afe489"
+            ]
+        ]
+    },
+    {
+        "id": "6ebbbd65f950ef59",
+        "type": "debug",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.rgbcolour",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "31ecc369ca9fb19a",
+        "type": "ui_colour_picker",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "label": "Colour Picker",
+        "group": "3fe9568e442a219e",
+        "format": "rgb",
+        "outformat": "string",
+        "showSwatch": true,
+        "showPicker": false,
+        "showValue": false,
+        "showHue": false,
+        "showAlpha": false,
+        "showLightness": true,
+        "square": "false",
+        "dynOutput": "false",
+        "order": 2,
+        "width": 5,
+        "height": 4,
+        "passthru": true,
+        "topic": "colour",
+        "topicType": "str",
+        "className": "",
+        "x": 100,
+        "y": 520,
+        "wires": [
+            [
+                "c02d9699df2b63c4",
+                "243b18bb8869290d"
+            ]
+        ]
+    },
+    {
+        "id": "072e02202ce8424f",
+        "type": "debug",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1270,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "7b647288f6638506",
+        "type": "ui_text",
+        "z": "bf55f7220cf88337",
+        "group": "3fe9568e442a219e",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Pick a colour, brightness, and specific light(s) to have it displayed on the Hue lighting system",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 900,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "9ce17cc4ab351e0d",
+        "type": "ui_slider",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "label": "Brightness",
+        "tooltip": "",
+        "group": "3fe9568e442a219e",
+        "order": 4,
+        "width": 11,
+        "height": 1,
+        "passthru": true,
+        "outs": "end",
+        "topic": "brightness",
+        "topicType": "str",
+        "min": 0,
+        "max": "254",
+        "step": 1,
+        "className": "",
+        "x": 630,
+        "y": 580,
+        "wires": [
+            [
+                "86c0f999ee1863f0"
+            ]
+        ]
+    },
+    {
+        "id": "d2536e7f7acc82fa",
+        "type": "mqtt out",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "topic": "tester/huelights",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "778faa7b9053d793",
+        "x": 1240,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "8806a93684b54be0",
+        "type": "function",
+        "z": "bf55f7220cf88337",
+        "name": "RGB to XY",
+        "func": "//var converter = global.get('colorConvertRGBtoXY');\nvar converter = q42philipsHueColorConverter;\nmsg.payload = converter.calculateXY(msg.payload[0], msg.payload[1], msg.payload[2]);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "q42philipsHueColorConverter",
+                "module": "@q42philips/hue-color-converter"
+            }
+        ],
+        "x": 450,
+        "y": 520,
+        "wires": [
+            [
+                "2ffb0e1690611cea",
+                "e83518c7ab569384",
+                "b7b25838ea487c47"
+            ]
+        ]
+    },
+    {
+        "id": "2ffb0e1690611cea",
+        "type": "debug",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload[1]",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "c02d9699df2b63c4",
+        "type": "function",
+        "z": "bf55f7220cf88337",
+        "name": "parser",
+        "func": "msg.payload = msg.payload.substring(4, msg.payload.length - 1);\nconst rgbArray = msg.payload.split(\", \");\nmsg.payload = rgbArray;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 520,
+        "wires": [
+            [
+                "8806a93684b54be0",
+                "bfce15bd10b3100d",
+                "3fdaefa02c9633bb"
+            ]
+        ]
+    },
+    {
+        "id": "e83518c7ab569384",
+        "type": "debug",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload[0]",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "b7b25838ea487c47",
+        "type": "function",
+        "z": "bf55f7220cf88337",
+        "name": "encoder [RGB]",
+        "func": "// This is needed as arrays cannot be sent over MQTT so we will\n//  have to decode on the backend (client)\nmsg.payload = msg.payload[0].toString() + \":\" + msg.payload[1].toString();\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 520,
+        "wires": [
+            [
+                "50e0ff6096752ce4"
+            ]
+        ]
+    },
+    {
+        "id": "27c9e67da96f016b",
+        "type": "ui_dropdown",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "label": "Light Names",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "3fe9568e442a219e",
+        "order": 3,
+        "width": 11,
+        "height": 2,
+        "passthru": true,
+        "multiple": true,
+        "options": [
+            {
+                "label": "",
+                "value": "Bloom",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "LightStripSolarLab",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "LightStrip Front Lightbox",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Reception South",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Front Vestibule",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Lightstrip 12N-East Entrance",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "22N Reception PV light",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Lightstrip22NorthReception",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "22N reception wall light",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Front Light",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Hue color lamp 2",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Hue color light 1",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Hue color light 2",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Showcase L",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Showcase R",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Hue color light 3",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Hue color light 4",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "lightnames",
+        "topicType": "str",
+        "className": "",
+        "x": 310,
+        "y": 660,
+        "wires": [
+            [
+                "6ba7a465fa52ac33",
+                "693b5984cdea5535"
+            ]
+        ]
+    },
+    {
+        "id": "7a6056489383936d",
+        "type": "debug",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "243b18bb8869290d",
+        "type": "debug",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 210,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "6ba7a465fa52ac33",
+        "type": "function",
+        "z": "bf55f7220cf88337",
+        "name": "encoder [lightnames]",
+        "func": "var result = \"\";\n\nfor (let i = 0; i < msg.payload.length - 1; i++) {\n    result += msg.payload[i] + \":\";\n}\nresult += msg.payload[msg.payload.length - 1];\nmsg.payload = result;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 660,
+        "wires": [
+            [
+                "7a6056489383936d",
+                "8443e32c44e2804e"
+            ]
+        ]
+    },
+    {
+        "id": "693b5984cdea5535",
+        "type": "debug",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 510,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "f392b8bccf7c37b9",
+        "type": "ui_text",
+        "z": "bf55f7220cf88337",
+        "group": "66ab5500c3edbb64",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Current Brightness: ",
+        "format": "{{msg.payload.brightness}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 650,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "adeef14cdb759385",
+        "type": "ui_text",
+        "z": "bf55f7220cf88337",
+        "group": "66ab5500c3edbb64",
+        "order": 4,
+        "width": 5,
+        "height": 4,
+        "name": "",
+        "label": "Lights Selected: ",
+        "format": "{{msg.payload.lightnames}}",
+        "layout": "col-center",
+        "className": "",
+        "x": 860,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "9cb02f96bc174a8e",
+        "type": "function",
+        "z": "bf55f7220cf88337",
+        "name": "formatting[lightnames]",
+        "func": "var lightnames = msg.payload.lightnames.split(\":\");\nvar result = \"\";\n\nfor (let i = 0; i < lightnames.length - 1; i++) {\n    result += lightnames[i] + \", \";\n}\nresult += lightnames[lightnames.length - 1]\nmsg.payload.lightnames = result;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 260,
+        "wires": [
+            [
+                "adeef14cdb759385"
+            ]
+        ]
+    },
+    {
+        "id": "bfce15bd10b3100d",
+        "type": "change",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "rgbcolour",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 440,
+        "wires": [
+            [
+                "d67a13b1c736fdb6",
+                "82d698bb74b3b04a"
+            ]
+        ]
+    },
+    {
+        "id": "d67a13b1c736fdb6",
+        "type": "debug",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "0efdaa672cb3284c",
+        "type": "ui_text",
+        "z": "bf55f7220cf88337",
+        "group": "66ab5500c3edbb64",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Current Colour (RGB): ",
+        "format": "{{msg.payload.rgbcolour}}",
+        "layout": "row-left",
+        "className": "",
+        "x": 880,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "b4980b0fd297e90e",
+        "type": "function",
+        "z": "bf55f7220cf88337",
+        "name": "check-if-has[rgbcolour]",
+        "func": "//var data = JSON.parse(msg.payload);\nvar data = msg.payload;\n\nif (data.hasOwnProperty('rgbcolour')) {\n    return msg;\n}\nreturn;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 180,
+        "wires": [
+            [
+                "6938a7c1fa2e3c8c"
+            ]
+        ]
+    },
+    {
+        "id": "08ed4373ed40f146",
+        "type": "function",
+        "z": "bf55f7220cf88337",
+        "name": "check-if-has[brightness]",
+        "func": "//var data = JSON.parse(msg.payload);\nvar data = msg.payload;\n\nif (data.hasOwnProperty('brightness')) {\n    return msg;\n}\nreturn;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 220,
+        "wires": [
+            [
+                "f392b8bccf7c37b9"
+            ]
+        ]
+    },
+    {
+        "id": "a886ce10a2afe489",
+        "type": "function",
+        "z": "bf55f7220cf88337",
+        "name": "check-if-has[lightnames]",
+        "func": "//var data = JSON.parse(msg.payload);\nvar data = msg.payload;\n\nif (data.hasOwnProperty('lightnames')) {\n    return msg;\n}\nreturn;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 260,
+        "wires": [
+            [
+                "9cb02f96bc174a8e"
+            ]
+        ]
+    },
+    {
+        "id": "6938a7c1fa2e3c8c",
+        "type": "function",
+        "z": "bf55f7220cf88337",
+        "name": "formatting[RGB]",
+        "func": "var result = \"(\" + msg.payload.rgbcolour[0] + \", \";\nresult += msg.payload.rgbcolour[1] + \", \";\nresult += msg.payload.rgbcolour[2] + \")\";\nmsg.payload.rgbcolour = result;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 180,
+        "wires": [
+            [
+                "0efdaa672cb3284c",
+                "208dd431f29a7559"
+            ]
+        ]
+    },
+    {
+        "id": "208dd431f29a7559",
+        "type": "debug",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 850,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "33d17889e9d63ff6",
+        "type": "ui_button",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "group": "3fe9568e442a219e",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "SUBMIT",
+        "tooltip": "",
+        "color": "white",
+        "bgcolor": "blue",
+        "className": "",
+        "icon": "",
+        "payload": "clicked",
+        "payloadType": "str",
+        "topic": "buttonstate",
+        "topicType": "str",
+        "x": 880,
+        "y": 320,
+        "wires": [
+            [
+                "0860837d13b24b5a"
+            ]
+        ]
+    },
+    {
+        "id": "50e0ff6096752ce4",
+        "type": "change",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "xy",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 830,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3fdaefa02c9633bb",
+        "type": "debug",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 310,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "82d698bb74b3b04a",
+        "type": "change",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "rgbcolour",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 850,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "86c0f999ee1863f0",
+        "type": "change",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "brightness",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 850,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8443e32c44e2804e",
+        "type": "change",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "lightnames",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 850,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0860837d13b24b5a",
+        "type": "function",
+        "z": "bf55f7220cf88337",
+        "name": "",
+        "func": "msg.payload = {};\nmsg.topic = \"huevalues\";\nmsg.payload.rgbcolour = flow.get(\"rgbcolour\");\nmsg.payload.xy = flow.get(\"xy\");\nmsg.payload.brightness = flow.get(\"brightness\");\nmsg.payload.lightnames = flow.get(\"lightnames\");\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1040,
+        "y": 320,
+        "wires": [
+            [
+                "072e02202ce8424f",
+                "d2536e7f7acc82fa"
+            ]
+        ]
+    },
+    {
+        "id": "778faa7b9053d793",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "3fe9568e442a219e",
+        "type": "ui_group",
+        "name": "Adjust",
+        "tab": "48e4574020c5fa11",
+        "order": 1,
+        "disp": true,
+        "width": 16,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "66ab5500c3edbb64",
+        "type": "ui_group",
+        "name": "Info",
+        "tab": "48e4574020c5fa11",
+        "order": 2,
+        "disp": true,
+        "width": "7",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "48e4574020c5fa11",
+        "type": "ui_tab",
+        "name": "Hue Lights",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
